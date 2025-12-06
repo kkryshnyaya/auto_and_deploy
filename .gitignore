@@ -1,0 +1,23 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+aut_deploy_venv/
+venv/
+
+# Jupyter checkpoints + ipynb
+.ipynb_checkpoints/
+ipynb/
+
+# Конфиденциальные данные
+creds.ini
+.env
+
+# Logs
+logs/
+*.log
+
+# Системные файлы macOS / VSCode
+.DS_Store
+.vscode/
