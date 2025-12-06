@@ -16,7 +16,7 @@ creds.ini
 
 # Logs
 logs/
-*.log
+# *.log
 
 # Системные файлы macOS / VSCode
 .DS_Store
