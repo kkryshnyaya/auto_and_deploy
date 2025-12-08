@@ -17,7 +17,6 @@ class RunScript:
             Logs.logger.info("Основной скрипт начал работу.")
 
             # Если вчера было воскресенье, завершаем работу скрипта
-            today = datetime.today()
             if (datetime.today() - timedelta(days=1)).weekday() == 6:
                 Logs.logger.warning("Вчера было воскресенье, файлы не должны генерироваться.")
                 return

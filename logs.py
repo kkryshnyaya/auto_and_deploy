@@ -14,11 +14,19 @@ class Logs:
     def setup_logs(cls, constants_file="constants.ini"):
         today = datetime.today().strftime("%Y-%m-%d")
 
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        # os.path.abspath(__file__) - абсолютный путь к текущему файлу
+        # os.path.dirname(...) - папка
+        full_constants_path = os.path.join(BASE_DIR, constants_file)
+        # путь к папке + имя файла
+
         config = configparser.ConfigParser()
-        config.read(constants_file, encoding="utf-8-sig")
-        cls.log_dir = Path(config["Paths"]["BASE_LOG_DIR"])
+        config.read(full_constants_path, encoding="utf-8-sig")
+
+        cls.log_dir = Path(os.path.join(BASE_DIR, config["Paths"]["BASE_LOG_DIR"]))
+        # cls.log_dir = Path(config["Paths"]["BASE_LOG_DIR"])
         cls.log_dir.mkdir(exist_ok=True)
-        log_file = cls.log_dir/f"{today}.log"
+        log_file = cls.log_dir / f"{today}.log"
 
         logging.basicConfig(
             level = logging.INFO,

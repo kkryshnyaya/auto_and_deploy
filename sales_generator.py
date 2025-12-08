@@ -6,6 +6,7 @@ import string  # Содержит готовые строки символов
 import configparser
 from pathlib import Path
 from datetime import datetime, timedelta
+import os
 
 from logs import Logs
 
@@ -34,8 +35,12 @@ class SalesGenerator:
     # Загрузка констант
     @classmethod
     def load_config(cls, constants_file="constants.ini"):
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        constants_path = os.path.join(BASE_DIR, constants_file)
+
         config = configparser.ConfigParser()
-        config.read(constants_file, encoding="utf-8-sig")
+        config.read(constants_path, encoding="utf-8-sig")
+
         cls.num_shops = config.getint("Ranges", "NUM_SHOPS")
         cls.min_cashes = config.getint("Ranges", "MIN_CASHES")
         cls.max_cashes = config.getint("Ranges", "MAX_CASHES")
@@ -54,7 +59,9 @@ class SalesGenerator:
             key = "ITEMS_" + category.replace(" ", "_")
             goods_raw = config["Goods"][key]
             cls.items[category] = [x.strip() for x in goods_raw.split(",")]
-        cls.output_dir = Path(config["Paths"]["BASE_SALE_DIR"])
+
+        cls.output_dir = Path(os.path.join(BASE_DIR, config["Paths"]["BASE_SALE_DIR"]))
+        # cls.output_dir = Path(config["Paths"]["BASE_SALE_DIR"])
         cls.output_dir.mkdir(exist_ok=True)
         cls.yesterday = (datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d")
         Logs.logger.info("Конфигурационный файл прочитан.")

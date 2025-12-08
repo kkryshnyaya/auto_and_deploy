@@ -2,6 +2,7 @@ import pandas as pd
 import configparser
 import psycopg2
 from pathlib import Path
+import os
 
 from logs import Logs
 
@@ -19,15 +20,20 @@ class Database:
     # Загрузка констант и учетных данных
     @classmethod
     def load_config(cls, constants_file="constants.ini", creds_file="creds.ini"):
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        constants_path = os.path.join(BASE_DIR, constants_file)
+        creds_path = os.path.join(BASE_DIR, creds_file)
+
         config = configparser.ConfigParser()
-        config.read([constants_file, creds_file], encoding="utf-8-sig")
-        cls.output_dir = Path(config["Paths"]["BASE_SALE_DIR"])
+        config.read([constants_path, creds_path], encoding="utf-8-sig")
+
+        cls.output_dir = Path(os.path.join(BASE_DIR, config["Paths"]["BASE_SALE_DIR"]))
+        # cls.output_dir = Path(config["Paths"]["BASE_SALE_DIR"])
         cls.host = config["Database"]["HOST"]
         cls.port = config["Database"]["PORT"]
         cls.user = config["Database"]["USER"]
         cls.password = config["Database"]["PASSWORD"]
         Logs.logger.info("Конфигурационные файлы прочитаны.")
-
 
 
     # Объединение .csv
