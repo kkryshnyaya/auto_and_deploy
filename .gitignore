@@ -1,22 +1,20 @@
-# Python cache
+# Python
 __pycache__/
 *.pyc
-
-# Virtual environment
-aut_deploy_venv/
-venv/
-
-# Jupyter checkpoints + ipynb
 .ipynb_checkpoints/
 ipynb/
 
+# Virtual environment
+venv/
+
 # Конфиденциальные данные
 creds.ini
-.env
 
-# Logs
+# Other
 logs/
-# *.log
+data/
+*.rtf
+*.docx
 
 # Системные файлы macOS / VSCode
 .DS_Store
